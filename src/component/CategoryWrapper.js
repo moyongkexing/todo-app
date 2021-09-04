@@ -92,7 +92,6 @@ export const CategoryWrapper = {
     dropTask: function(event, dropId) {
       const dragId = Number(event.dataTransfer.getData("drag-id"));
       this.taskList.swap(dragId, dropId);
-      console.log(this.taskList.print());
     }
   }
 }
