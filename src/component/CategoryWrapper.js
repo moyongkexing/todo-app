@@ -3,16 +3,8 @@ import { TaskList } from "../class/TaskList.js";
 
 export const CategoryWrapper = {
   template: `
-    <div
-      style="
-        background-color: red;
-        margin: 10px;
-        padding: 10px;
-        width: 25%;
-        float: left;
-      "
-    >
-      <p style="color: white;">{{ category }}</p>
+    <div class="categoryWrapper">
+      <p class="categoryTitle">{{ category }}</p>
 
       <form @submit.prevent="createTask">
         <input type="text" v-model="title" placeholder="タスク名">
@@ -20,15 +12,18 @@ export const CategoryWrapper = {
         <button type="submit">作成</button>
       </form>
 
-      <div v-if="taskExists" style="color: white;">
+      <div class="taskWrapper" v-if="taskExists" style="color: white;">
         <div
           v-for="task in tasks"
           @drop="dropTask($event, task.id)"
           @dragover.prevent
           @dragenter.prevent
         >
-          <div draggable @dragstart="dragTask($event, task.id)">
-            {{ task }}
+          <div class="task" draggable @dragstart="dragTask($event, task.id)">
+            <p class="">{{ task.id }}</p>
+            <p class="taskTitle">{{ task.title }}</p>
+            <p class="taskContent">{{ task.content }}</p>
+            <p class="taskDate">{{ task.date }}</p>
             <i @click="deleteTask(task.id)" class="fas fa-trash"></i>
           </div>
         </div>

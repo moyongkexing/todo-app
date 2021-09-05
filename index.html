@@ -6,10 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  <link rel="stylesheet" href="assets/style.css">
   <title>Document</title>
 </head>
 <body>
-  <div id="app" style="width: 100%;">
+  <div id="app">
       <category-wrapper v-for="category in categories" :category="category" :key="category"></category-wrapper>
   </div>
   <script type="module" src="./src/index.js"></script>

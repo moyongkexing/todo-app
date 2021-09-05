@@ -62,28 +62,49 @@ export class TaskList {
     return arr;
   }
   
+  printAll() {
+    let task = this.head;
+    let arr = [];
+    while(task !== null) {
+      arr.push({
+        data: this.debug(task),
+        next: this.debug(task.next),
+        prev: this.debug(task.prev),
+      })
+      task = task.next;
+    }
+    return arr;
+  }
+
+  debug(task) {
+    if(task !== null) return `: ${task.id}`;
+    else return ": null";
+  }
   swap(idA, idB) {
     console.log("===================================")
     console.log("swap(" + idA + "," + idB + ")が呼ばれた");
     let taskA = this.findById(idA);
     let taskB = this.findById(idB);
-  
-    console.log("taskAのid: " + taskA.id);
-    console.log("taskBのid: " + taskB.id);
 
     let tempANext = taskA.next;
     let tempAPrev = taskA.prev;
+
+    console.log(this.printAll());
     
     switch(taskA) {
       case taskB.prev:
+        console.log("taskAはtaskBの前")
+
         taskA.next = taskB.next;
         taskA.prev = taskB;
 
         taskB.next = taskA;
         taskB.prev = tempAPrev;
+        taskA.prev.next = taskB;
         break;
 
       case taskB.next:
+        console.log("taskAはtaskBの次")
         taskA.next = taskB;
         taskA.prev = taskB.prev;
 
@@ -92,6 +113,7 @@ export class TaskList {
         break;
 
       default:
+        console.log("taskAとtaskBは離れてる")
         taskA.next = taskB.next;
         taskA.prev = taskB.prev;
 
@@ -99,39 +121,7 @@ export class TaskList {
         taskB.prev = tempAPrev;
     }
 
-    const debug = (task) => {
-      if(task !== null) return `: ${task.id}`;
-      else return ": null";
-    }
-
-    const printAB = () => {
-      console.log("--------------------------")
-      console.log("taskA" + debug(taskA))
-      console.log("taskA.next" + debug(taskA.next))
-      console.log("taskA.prev" + debug(taskA.prev))
-      console.log("");
-      console.log("taskB" + debug(taskB))
-      console.log("taskB.next" + debug(taskB.next))
-      console.log("taskB.prev" + debug(taskB.prev))
-      console.log("");
-      console.log("this.head" + debug(this.head));
-      console.log("this.tail" + debug(this.tail));
-    }
-
-    printAB();
-    [taskA, taskB].forEach(task => {
-      if(task.prev === null) {
-        this.head = task;
-        this.head.next = task.next;
-      }
-      else if(task.next === null) {
-        this.tail = task;
-        this.tail.prev = task.prev;
-      }
-    })
-    printAB();
-  
-    console.log("リスト内全要素のid: [" + this.print() + "]");
+    console.log(this.printAll());
   }
 
   filter(category) {
@@ -141,6 +131,7 @@ export class TaskList {
     while(task !== null && task.category === category) {
       arr.push({
         id: task.id,
+        title: task.title,
         content: task.content,
         date: task.date.join(""),
       });
